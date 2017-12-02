@@ -47,7 +47,6 @@ public class MainActivity extends BaseActivity implements ProgressDialog.Progres
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // mProgressAsyncTask = (ProgressAsyncTask) getLastNonConfigurationInstance();
         mProgressDialog = ProgressDialog.newInstance();
 
         if (mProgressAsyncTask == null) {
@@ -127,6 +126,7 @@ public class MainActivity extends BaseActivity implements ProgressDialog.Progres
         mProgressDialog.show(getSupportFragmentManager(), null);
         mProgressDialog.updateProgress(0);
         mProgressAsyncTask.execute();
+        lockScreenOrientation(true);
         authorTv.setTextColor(getResources().getColor(android.R.color.white));
     }
 
@@ -134,16 +134,12 @@ public class MainActivity extends BaseActivity implements ProgressDialog.Progres
     public void onCancelDialog() {
         mProgressAsyncTask.cancel(true);
         authorTv.setTextColor(getResources().getColor(android.R.color.black));
-    }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        mProgressAsyncTask.detach();
-        return (mProgressAsyncTask);
+        lockScreenOrientation(false);
     }
 
     @Override
     public void onProgressFinish() {
         authorTv.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
+        lockScreenOrientation(false);
     }
 }

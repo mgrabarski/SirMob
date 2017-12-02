@@ -1,5 +1,7 @@
 package mateusz.grabarski.sirmobt.base;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -33,5 +35,13 @@ abstract public class BaseActivity extends AppCompatActivity {
                 doubleBackToExit = false;
             }
         }, DOUBLE_BACK_DELAY);
+    }
+
+    protected void lockScreenOrientation(boolean lock) {
+        if (lock) {
+            setRequestedOrientation(getResources().getConfiguration().orientation);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
     }
 }
