@@ -61,7 +61,7 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof FirstElementViewHolder)
             ((FirstElementViewHolder) holder).populate(mListener);
         else if (holder instanceof SecondElementViewHolder)
-            ((SecondElementViewHolder) holder).populate();
+            ((SecondElementViewHolder) holder).populate(mListener);
         else if (holder instanceof ThirdElementViewHolder)
             ((ThirdElementViewHolder) holder).populate();
         else
@@ -130,7 +130,15 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate() {
+        private SecondViewAdapterListener mListener;
+
+        public void populate(SecondViewAdapterListener listener) {
+            mListener = listener;
+        }
+
+        @OnClick(R.id.item_second_element_button)
+        public void onBtnClick() {
+            mListener.onClickBtnFromSecondElement();
         }
     }
 
