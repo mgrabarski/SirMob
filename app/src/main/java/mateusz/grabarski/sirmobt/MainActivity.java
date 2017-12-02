@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mateusz.grabarski.sirmobt.adapters.MainViewAdapter;
+import mateusz.grabarski.sirmobt.base.BaseActivity;
 import mateusz.grabarski.sirmobt.dialogs.ProgressDialog;
 import mateusz.grabarski.sirmobt.models.MainItem;
 import mateusz.grabarski.sirmobt.utils.DataGenerator;
@@ -24,7 +25,7 @@ import mateusz.grabarski.sirmobt.utils.ProgressAsyncTask;
 import static mateusz.grabarski.sirmobt.Constants.ASYNC_TASK_WORKING_TIME;
 import static mateusz.grabarski.sirmobt.Constants.MAX_NUMBER_OF_ELEMENTS;
 
-public class MainActivity extends AppCompatActivity implements ProgressDialog.ProgressDialogListener, ProgressAsyncTask.PressListener {
+public class MainActivity extends BaseActivity implements ProgressDialog.ProgressDialogListener, ProgressAsyncTask.PressListener {
 
     @BindView(R.id.activity_main_author_text)
     TextView authorTv;
