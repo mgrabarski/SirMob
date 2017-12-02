@@ -42,7 +42,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder = new ItemViewHolder(view);
         } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_progress, parent, false);
-
             viewHolder = new ProgressViewHolder(v);
         }
         return viewHolder;

@@ -21,6 +21,9 @@ import mateusz.grabarski.sirmobt.models.MainItem;
 import mateusz.grabarski.sirmobt.utils.DataGenerator;
 import mateusz.grabarski.sirmobt.utils.ProgressAsyncTask;
 
+import static mateusz.grabarski.sirmobt.Constants.ASYNC_TASK_WORKING_TIME;
+import static mateusz.grabarski.sirmobt.Constants.MAX_NUMBER_OF_ELEMENTS;
+
 public class MainActivity extends AppCompatActivity implements ProgressDialog.ProgressDialogListener, ProgressAsyncTask.PressListener {
 
     @BindView(R.id.activity_main_author_text)
@@ -90,10 +93,12 @@ public class MainActivity extends AppCompatActivity implements ProgressDialog.Pr
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
+                    if (totalItemCount == MAX_NUMBER_OF_ELEMENTS)
+                        return;
+
                     if (loading) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             loading = false;
-                            Log.v(MainActivity.class.getSimpleName(), "Last Item Wow !");
 
                             mItems.add(new MainItem("Item", 0, true));
                             mAdapter.notifyDataSetChanged();
@@ -103,13 +108,9 @@ public class MainActivity extends AppCompatActivity implements ProgressDialog.Pr
                                 @Override
                                 public void run() {
                                     mItems.remove(mItems.size() - 1);
-
-                                    // TODO: 01.12.2017 remove last element
-
                                     mItems.addAll(DataGenerator.getLoadedItems());
                                     mAdapter.notifyDataSetChanged();
                                     loading = true;
-
                                 }
                             }, 5000);
                         }
@@ -121,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements ProgressDialog.Pr
 
     @OnClick(R.id.activity_main_author_text)
     public void onAuthorClick() {
-        mProgressAsyncTask = new ProgressAsyncTask(mProgressDialog, 5, this);
-        mProgressDialog.show(getSupportFragmentManager(), "asdf");
+        mProgressAsyncTask = new ProgressAsyncTask(mProgressDialog, ASYNC_TASK_WORKING_TIME, this);
+        mProgressDialog.show(getSupportFragmentManager(), null);
         mProgressDialog.updateProgress(0);
         mProgressAsyncTask.execute();
         authorTv.setTextColor(getResources().getColor(android.R.color.white));

@@ -17,6 +17,7 @@ public class DataGenerator {
 
     private static final int START_NUMBER_OF_ELEMENTS = 100;
     private static final int LOAD_NUMBER_OF_ELEMENTS = 20;
+    public static final int NUMBER_OF_PRE_DEFINE_ELEMENTS = 3;
 
     private static final Random RANDOM = new Random();
 
@@ -26,6 +27,10 @@ public class DataGenerator {
 
     public static List<MainItem> getLoadedItems() {
         return generateItems(LOAD_NUMBER_OF_ELEMENTS);
+    }
+
+    public static List<MainItem> getItemsForSecondView() {
+        return generateItems(LOAD_NUMBER_OF_ELEMENTS - NUMBER_OF_PRE_DEFINE_ELEMENTS);
     }
 
     @NonNull
