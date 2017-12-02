@@ -2,4 +2,6 @@
     <string name="app_name">SirMobT</string>
     <string name="author_name">Mateusz Grabarski</string>
     <string name="anuluj">Anuluj</string>
+    <string name="btn_1">button1</string>
+    <string name="ok">Ok</string>
 </resources>

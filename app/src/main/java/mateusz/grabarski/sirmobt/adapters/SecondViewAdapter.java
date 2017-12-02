@@ -4,9 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mateusz.grabarski.sirmobt.R;
 import mateusz.grabarski.sirmobt.models.MainItem;
 
@@ -24,9 +28,11 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int NORMAL_ELEMENT = 3;
 
     private List<MainItem> mItems;
+    private SecondViewAdapterListener mListener;
 
-    public SecondViewAdapter(List<MainItem> mItems) {
+    public SecondViewAdapter(List<MainItem> mItems, SecondViewAdapterListener listener) {
         this.mItems = mItems;
+        this.mListener = listener;
     }
 
     @Override
@@ -53,7 +59,7 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FirstElementViewHolder)
-            ((FirstElementViewHolder) holder).populate();
+            ((FirstElementViewHolder) holder).populate(mListener);
         else if (holder instanceof SecondElementViewHolder)
             ((SecondElementViewHolder) holder).populate();
         else if (holder instanceof ThirdElementViewHolder)
@@ -81,11 +87,39 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public static class FirstElementViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.item_first_element_button)
+        Button button1;
+
+        @BindView(R.id.item_first_element_button2)
+        Button button2;
+
+        @BindView(R.id.item_first_element_button3)
+        Button button3;
+
+        private SecondViewAdapterListener mListener;
+
         public FirstElementViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
-        public void populate() {
+        public void populate(SecondViewAdapterListener listener) {
+            mListener = listener;
+        }
+
+        @OnClick(R.id.item_first_element_button)
+        public void onClick1Btn() {
+            mListener.onClickFirstBtnFromFirstElement();
+        }
+
+        @OnClick(R.id.item_first_element_button2)
+        public void onClick2Btn() {
+            button2.setVisibility(View.GONE);
+        }
+
+        @OnClick(R.id.item_first_element_button3)
+        public void onClick3Btn() {
+            button1.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -93,6 +127,7 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public SecondElementViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void populate() {
@@ -103,9 +138,15 @@ public class SecondViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public ThirdElementViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void populate() {
         }
+    }
+
+    public interface SecondViewAdapterListener {
+        void onClickFirstBtnFromFirstElement();
+        void onClickBtnFromSecondElement();
     }
 }

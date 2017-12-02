@@ -1,6 +1,8 @@
 package mateusz.grabarski.sirmobt;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +12,7 @@ import butterknife.ButterKnife;
 import mateusz.grabarski.sirmobt.adapters.SecondViewAdapter;
 import mateusz.grabarski.sirmobt.utils.DataGenerator;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity implements SecondViewAdapter.SecondViewAdapterListener {
 
     @BindView(R.id.activity_second_rv)
     RecyclerView list;
@@ -23,7 +25,25 @@ public class SecondActivity extends AppCompatActivity {
 
         list.setLayoutManager(new LinearLayoutManager(this));
 
-        SecondViewAdapter adapter = new SecondViewAdapter(DataGenerator.getItemsForSecondView());
+        SecondViewAdapter adapter = new SecondViewAdapter(DataGenerator.getItemsForSecondView(), this);
         list.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClickFirstBtnFromFirstElement() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.btn_1)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onClickBtnFromSecondElement() {
+        
     }
 }
